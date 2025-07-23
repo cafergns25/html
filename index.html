@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sana Bir Sürprizim Var Azra!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%); /* Tatlı pembe tonları */
+            font-family: 'Open Sans', sans-serif;
+            color: #333;
+            overflow: hidden; /* Taşmaları engelle */
+            text-align: center;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 90%;
+            width: 400px;
+            text-align: center;
+            box-sizing: border-box; /* Padding'in genişliği etkilememesi için */
+        }
+
+        /* Sürpriz Kutusu Ekranı */
+        .surprise-box-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .surprise-box-screen:hover {
+            transform: scale(1.03);
+        }
+
+        .gift-box {
+            width: 150px;
+            height: 150px;
+            background-color: #e74c3c; /* Kırmızı kutu */
+            border-radius: 10px;
+            position: relative;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .gift-box::before { /* Kurdele dikey */
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 100%;
+            background-color: #c0392b; /* Koyu kırmızı kurdele */
+            border-radius: 5px;
+        }
+
+        .gift-box::after { /* Kurdele yatay */
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            width: 100%;
+            height: 30px;
+            background-color: #c0392b; /* Koyu kırmızı kurdele */
+            border-radius: 5px;
+        }
+
+        .bow { /* Fiyonk */
+            width: 80px;
+            height: 80px;
+            background-color: #e74c3c;
+            border-radius: 50%;
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .bow::before, .bow::after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background-color: #e74c3c;
+            border-radius: 50%;
+            top: 10px;
+        }
+        .bow::before { left: -20px; transform: rotate(45deg); }
+        .bow::after { right: -20px; transform: rotate(-45deg); }
+
+
+        .surprise-box-screen h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 2.2em;
+            color: #e74c3c;
+            margin-bottom: 15px;
+        }
+
+        .surprise-box-screen p {
+            font-size: 1.1em;
+            color: #555;
+            margin-bottom: 0;
+        }
+
+        /* Soru Ekranı */
+        .question-screen {
+            display: none; /* Başlangıçta gizli */
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .question-screen h2 {
+            font-family: 'Pacifico', cursive;
+            font-size: 2.5em;
+            color: #e74c3c;
+            margin-bottom: 10px;
+        }
+
+        .question-screen p {
+            font-size: 1.3em;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap; /* Küçük ekranlarda alt alta geçsinler */
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 120px; /* Butonların minimum genişliği */
+        }
+
+        .btn-yes {
+            background-color: #2ecc71; /* Yeşil */
+            color: white;
+            box-shadow: 0 4px 10px rgba(46, 204, 113, 0.4);
+        }
+
+        .btn-yes:hover {
+            background-color: #27ae60;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(46, 204, 113, 0.6);
+        }
+
+        .btn-no {
+            background-color: #e67e22; /* Turuncu */
+            color: white;
+            box-shadow: 0 4px 10px rgba(230, 126, 34, 0.4);
+        }
+
+        .btn-no:hover {
+            background-color: #d35400;
+            transform: scale(1.1); /* Hayır butonu büyüsün */
+            box-shadow: 0 6px 15px rgba(230, 126, 34, 0.6);
+        }
+
+        /* Cevap Ekranı */
+        .answer-screen {
+            display: none; /* Başlangıçta gizli */
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .answer-screen h2 {
+            font-family: 'Pacifico', cursive;
+            font-size: 2.8em;
+            color: #2ecc71;
+            margin-bottom: 20px;
+        }
+
+        .answer-screen p {
+            font-size: 1.4em;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        /* Küçük ekranlar için responsive ayarlar */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            .surprise-box-screen h1 {
+                font-size: 1.8em;
+            }
+            .surprise-box-screen p {
+                font-size: 1em;
+            }
+            .question-screen h2 {
+                font-size: 2em;
+            }
+            .question-screen p {
+                font-size: 1.1em;
+            }
+            .btn {
+                padding: 12px 25px;
+                font-size: 1.1em;
+                min-width: unset; /* Küçük ekranlarda minimum genişliği kaldır */
+                width: 100%; /* Butonlar tam genişlikte olsun */
+            }
+            .buttons {
+                flex-direction: column; /* Küçük ekranlarda butonlar alt alta */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="surprise-box-screen" id="surpriseBoxScreen">
+            <div class="gift-box">
+                <div class="bow"></div>
+            </div>
+            <h1>Sana Bir Sürprizim Var Azra!</h1>
+            <p>Kutuyu açmak için tıkla...</p>
+        </div>
+
+        <div class="question-screen" id="questionScreen">
+            <h2>Seni seviyorum!</h2>
+            <p>Benim sevgilim olur musun?</p>
+            <div class="buttons">
+                <button class="btn btn-yes" id="yesButton">EVET</button>
+                <button class="btn btn-no" id="noButton">HAYIR</button>
+            </div>
+        </div>
+
+        <div class="answer-screen" id="answerScreen">
+            <h2>YAŞASIN!</h2>
+            <p>Beni dünyanın en mutlu insanı yaptın Azra!</p>
+            <p>Bu güzel başlangıç için sabırsızlanıyorum. ❤️</p>
+        </div>
+    </div>
+
+    <script>
+        const surpriseBoxScreen = document.getElementById('surpriseBoxScreen');
+        const questionScreen = document.getElementById('questionScreen');
+        const answerScreen = document.getElementById('answerScreen');
+        const yesButton = document.getElementById('yesButton');
+        const noButton = document.getElementById('noButton');
+
+        // Sürpriz kutusuna tıklanınca
+        surpriseBoxScreen.addEventListener('click', () => {
+            surpriseBoxScreen.style.display = 'none'; // Kutuyu gizle
+            questionScreen.style.display = 'flex';    // Soruyu göster
+        });
+
+        // EVET butonuna tıklanınca
+        yesButton.addEventListener('click', () => {
+            questionScreen.style.display = 'none'; // Soruyu gizle
+            answerScreen.style.display = 'flex';   // Cevabı göster
+        });
+
+        // HAYIR butonuna tıklanınca (büyüme efekti)
+        noButton.addEventListener('click', () => {
+            const currentScale = parseFloat(noButton.style.transform.replace('scale(', '').replace(')', '')) || 1;
+            noButton.style.transform = scale(${currentScale * 1.1}); // Her tıklamada %10 büyüt
+            noButton.style.transition = 'transform 0.2s ease-out'; // Yumuşak geçiş
+        });
+
+        // Sayfa yüklendiğinde HAYIR butonunun transform stilini sıfırla (tarayıcı önbelleği için)
+        window.addEventListener('load', () => {
+            noButton.style.transform = 'scale(1)';
+        });
+    </script>
+</body>
+</html>
