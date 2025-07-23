@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sana Bir Sürprizim Var Azra!</title>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <title>Sana Bir Sorum Var Azra!</title> <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
@@ -30,97 +29,19 @@
             box-sizing: border-box; /* Padding'in genişliği etkilememesi için */
         }
 
-        /* Sürpriz Kutusu Ekranı */
+        /* Sürpriz Kutusu Ekranı kaldırıldığı için bu CSS artık kullanılmıyor, ama temizlik yapmadım, istersen silebilirsin. */
         .surprise-box-screen {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: transform 0.3s ease-in-out;
+            display: none; /* Bu ekran artık başlangıçta görünmüyor */
+            /* Diğer stillerini koruyorum, ama artık HTML'de yok */
         }
 
-        .surprise-box-screen:hover {
-            transform: scale(1.03);
-        }
-
-        .gift-box {
-            width: 150px;
-            height: 150px;
-            background-color: #e74c3c; /* Kırmızı kutu */
-            border-radius: 10px;
-            position: relative;
-            margin-bottom: 25px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .gift-box::before { /* Kurdele dikey */
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 30px;
-            height: 100%;
-            background-color: #c0392b; /* Koyu kırmızı kurdele */
-            border-radius: 5px;
-        }
-
-        .gift-box::after { /* Kurdele yatay */
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            transform: translateY(-50%);
-            width: 100%;
-            height: 30px;
-            background-color: #c0392b; /* Koyu kırmızı kurdele */
-            border-radius: 5px;
-        }
-
-        .bow { /* Fiyonk */
-            width: 80px;
-            height: 80px;
-            background-color: #e74c3c;
-            border-radius: 50%;
-            position: absolute;
-            top: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-        .bow::before, .bow::after {
-            content: '';
-            position: absolute;
-            width: 60px;
-            height: 60px;
-            background-color: #e74c3c;
-            border-radius: 50%;
-            top: 10px;
-        }
-        .bow::before { left: -20px; transform: rotate(45deg); }
-        .bow::after { right: -20px; transform: rotate(-45deg); }
-
-
-        .surprise-box-screen h1 {
-            font-family: 'Pacifico', cursive;
-            font-size: 2.2em;
-            color: #e74c3c;
-            margin-bottom: 15px;
-        }
-
-        .surprise-box-screen p {
-            font-size: 1.1em;
-            color: #555;
-            margin-bottom: 0;
-        }
-
-        /* Soru Ekranı */
+        /* Soru Ekranı - BAŞLANGIÇTA GÖRÜNÜR OLACAK */
         .question-screen {
-            display: none; /* Başlangıçta gizli */
+            display: flex; /* Başlangıçta görünür yapıldı */
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            min-height: 300px;
         }
 
         .question-screen h2 {
@@ -184,6 +105,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            min-height: 300px;
         }
 
         .answer-screen h2 {
@@ -199,16 +121,71 @@
             line-height: 1.6;
         }
 
+        /* YENİ BÖLÜM: Anılarımız Ekranı */
+        .memories-screen {
+            display: none; /* BAŞLANGIÇTA GİZLİ */
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 300px;
+        }
+
+        .memories-screen h2 {
+            font-family: 'Pacifico', cursive;
+            font-size: 2.2em;
+            color: #e74c3c;
+            margin-bottom: 20px;
+        }
+
+        .memories-screen p {
+            font-size: 1.1em;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .memory-item {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .memory-item h3 {
+            color: #555;
+            font-size: 1.4em;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        /* Yeni buton stili */
+        .btn-primary {
+            background-color: #3498db; /* Mavi */
+            color: white;
+            padding: 12px 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.4);
+        }
+
         /* Küçük ekranlar için responsive ayarlar */
         @media (max-width: 600px) {
             .container {
                 padding: 20px;
-            }
-            .surprise-box-screen h1 {
-                font-size: 1.8em;
-            }
-            .surprise-box-screen p {
-                font-size: 1em;
             }
             .question-screen h2 {
                 font-size: 2em;
@@ -219,28 +196,32 @@
             .btn {
                 padding: 12px 25px;
                 font-size: 1.1em;
-                min-width: unset; /* Küçük ekranlarda minimum genişliği kaldır */
-                width: 100%; /* Butonlar tam genişlikte olsun */
+                min-width: unset;
+                width: 100%;
             }
             .buttons {
-                flex-direction: column; /* Küçük ekranlarda butonlar alt alta */
+                flex-direction: column;
+            }
+            .memories-screen h2 {
+                font-size: 1.8em;
+            }
+            .memories-screen p {
+                font-size: 1em;
+            }
+            .btn-primary {
+                width: 100%;
+                margin-left: 0;
+                margin-right: 0;
+                margin-bottom: 10px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="surprise-box-screen" id="surpriseBoxScreen">
-            <div class="gift-box">
-                <div class="bow"></div>
-            </div>
-            <h1>Sana Bir Sürprizim Var Azra!</h1>
-            <p>Kutuyu açmak için tıkla...</p>
-        </div>
-
         <div class="question-screen" id="questionScreen">
             <h2>Seni seviyorum!</h2>
-            <p>Benim sevgilim olur musun?</p>
+            <p>Benim sevgilim olur musun Azra?</p>
             <div class="buttons">
                 <button class="btn btn-yes" id="yesButton">EVET</button>
                 <button class="btn btn-no" id="noButton">HAYIR</button>
@@ -252,25 +233,56 @@
             <p>Beni dünyanın en mutlu insanı yaptın Azra!</p>
             <p>Bu güzel başlangıç için sabırsızlanıyorum. ❤️</p>
         </div>
-    </div>
+
+        <div class="memories-screen" id="memoriesScreen">
+            <h2>Anılarımızdan Kareler</h2>
+            <p>Birlikte geçirdiğimiz her an, benim için çok özeldi Azra...</p>
+
+            <div class="memory-item">
+                <h3>İlk Tanışma</h3>
+                <p>O gün seni ilk gördüğümde zaman durmuştu sanki, Azra'cım.</p>
+            </div>
+
+            <div class="memory-item">
+                <h3>O Tatil Macerası</h3>
+                <p>Seninle yan yana olmak, en basit anı bile unutulmaz kılıyor.</p>
+            </div>
+
+            <button class="btn btn-primary" id="backToHomeButton">Ana Sayfaya Dön</button>
+            <button class="btn btn-primary" id="nextPageButton">Gelecek Planlarımız</button>
+        </div>
+        </div>
 
     <script>
-        const surpriseBoxScreen = document.getElementById('surpriseBoxScreen');
+        // surpriseBoxScreen artık HTML'de yok, bu satırı kaldırdık
+        // const surpriseBoxScreen = document.getElementById('surpriseBoxScreen'); 
         const questionScreen = document.getElementById('questionScreen');
         const answerScreen = document.getElementById('answerScreen');
         const yesButton = document.getElementById('yesButton');
         const noButton = document.getElementById('noButton');
 
-        // Sürpriz kutusuna tıklanınca
-        surpriseBoxScreen.addEventListener('click', () => {
-            surpriseBoxScreen.style.display = 'none'; // Kutuyu gizle
-            questionScreen.style.display = 'flex';    // Soruyu göster
-        });
+        const memoriesScreen = document.getElementById('memoriesScreen');
+        const backToHomeButton = document.getElementById('backToHomeButton');
+        const nextPageButton = document.getElementById('nextPageButton');
+
+
+        // Sürpriz kutusuna tıklama olay dinleyicisi kaldırıldı, çünkü kutu yok
+        // surpriseBoxScreen.addEventListener('click', () => {
+        //     surpriseBoxScreen.style.display = 'none';
+        //     questionScreen.style.display = 'flex';
+        // });
+
 
         // EVET butonuna tıklanınca
         yesButton.addEventListener('click', () => {
             questionScreen.style.display = 'none'; // Soruyu gizle
             answerScreen.style.display = 'flex';   // Cevabı göster
+
+            // 2 saniye sonra Anılarımız sayfasına geçiş yap (isteğe bağlı bir bekleme)
+            setTimeout(() => {
+                answerScreen.style.display = 'none'; // Cevap ekranını gizle
+                memoriesScreen.style.display = 'flex'; // Anılarımız ekranını göster
+            }, 2000); // 2000 milisaniye = 2 saniye
         });
 
         // HAYIR butonuna tıklanınca (büyüme efekti)
@@ -280,10 +292,4 @@
             noButton.style.transition = 'transform 0.2s ease-out'; // Yumuşak geçiş
         });
 
-        // Sayfa yüklendiğinde HAYIR butonunun transform stilini sıfırla (tarayıcı önbelleği için)
-        window.addEventListener('load', () => {
-            noButton.style.transform = 'scale(1)';
-        });
-    </script>
-</body>
-</html>
+        // YENİ BUTONLAR İÇİN
